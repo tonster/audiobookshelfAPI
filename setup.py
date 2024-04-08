@@ -27,7 +27,8 @@ setup(
     keywords=['audiobookshelf', 'api'],
     install_requires=[
         'aiohttp>=3.9.3',
-        'python-dateutil>=2.8.2'
+        'python-dateutil>=2.8.2',
+        'aiofiles'
     ],
     package_data={'audiobookshelf': ['py.typed']}
 )
