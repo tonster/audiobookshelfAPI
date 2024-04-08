@@ -147,7 +147,7 @@ class ABSClient:
                             library_item_id: str,
                             ino: str,
                             target_path: str):
-        url = build_url(f'api/items/{library_item_id}/file/{ino}/download', {'token': self.user['token']})
+        url = build_url(f'{self.base_url}/api/items/{library_item_id}/file/{ino}/download', {'token': self.user['token']})
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
                 if response.status == 200:
