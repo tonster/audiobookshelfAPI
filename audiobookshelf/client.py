@@ -1,5 +1,7 @@
 from typing import Optional, List
 
+import aiohttp
+import aiofiles
 from aiohttp import ClientSession
 from audiobookshelf.helper import remove_none_values, build_url
 
@@ -140,3 +142,15 @@ class ABSClient:
             'episode': episode
         })
         return await self._api_call('GET', build_url(f'api/items/{item_id}', param), {})
+
+    async def download_file(self,
+                            library_item_id: str,
+                            ino: str,
+                            target_path: str):
+        url = build_url(f'api/items/{library_item_id}/file/{ino}/download', {'token': self.user['token']})
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as response:
+                if response.status == 200:
+                    f = await aiofiles.open(target_path, mode='wb')
+                    await f.write(await response.read())
+                    await f.close()
