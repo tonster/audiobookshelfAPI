@@ -127,3 +127,16 @@ class ABSClient:
             'include': include
         })
         return await self._api_call('GET', build_url(f'api/libraries/{library_id}/items', param), {})
+
+    async def get_library_item(self,
+                               item_id: str,
+                               expanded: bool = False,
+                               include: List[str] = None,
+                               episode: Optional[str] = None) -> dict:
+        include = ','.join(include) if include is not None else None
+        param = remove_none_values({
+            'expanded': 1 if expanded else 0,
+            'include': include,
+            'episode': episode
+        })
+        return await self._api_call('GET', build_url(f'api/items/{item_id}', param), {})
