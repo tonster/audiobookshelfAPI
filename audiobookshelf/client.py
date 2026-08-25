@@ -154,3 +154,6 @@ class ABSClient:
                     f = await aiofiles.open(target_path, mode='wb')
                     await f.write(await response.read())
                     await f.close()
+
+    async def scan_library_item(self, item_id: str):
+        await self._api_call('POST', f'api/items/{item_id}/scan', {}, return_result=False)
